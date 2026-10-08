@@ -144,8 +144,8 @@ button {
 }
 
 .module-card.veloci {
-  /* Former ASCO 2026 blue gradient (swapped with VelociSuite purple). */
-  background: linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%);
+  /* Original VelociSuite purple/magenta color scheme. */
+  background: linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%);
 }
 
 .module-card.rgc {
@@ -238,7 +238,7 @@ button {
 .module-screen.veloci {
   background:
     radial-gradient(circle at 72% 8%, rgba(255, 255, 255, 0.18), transparent 25%),
-    linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%);
+    linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%);
 }
 
 .module-screen.rgc {
@@ -489,3 +489,17 @@ button {
 .legal-footer a:hover {
   text-decoration: underline;
 }
+
+/* Missing assets show an honest status instead of a broken image or 404 link. */
+.download-unavailable {
+  margin-top: 24px; padding: 14px 16px; border: 1px dashed rgba(255,255,255,.5);
+  border-radius: 16px; color: #fff; font-size: 13px; line-height: 1.5;
+  background: rgba(7, 26, 60, .36); overflow-wrap: anywhere;
+}
+.download-unavailable code { font-size: 11px; }
+.preview-pending {
+  display: grid; gap: 8px; margin-top: 22px; padding: 44px 18px;
+  text-align: center; border-radius: 18px; background: linear-gradient(135deg,#16629b,#0a2b65);
+  color: #fff; border: 1px solid rgba(255,255,255,.25);
+}
+.preview-pending span { font-size: 12px; color: rgba(255,255,255,.78); }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Screen = {
   label: string;
@@ -61,7 +61,7 @@ const modules: Module[] = [
           "Download the source PDF or return to the main menu to explore additional Regeneron materials",
         preview: {
           src: "/downloads/company-update-preview.png",
-          alt: "Company Update preview"
+          alt: "Regeneron Company Update preview"
         },
         download: {
           label: "Download Company Brochure",
@@ -155,12 +155,12 @@ const modules: Module[] = [
         body:
           "Download the source PDF or return to the main menu to explore additional Regeneron materials",
         preview: {
-          // Initially shared with ASCO as requested; replace with ESMO artwork later.
-          src: "/downloads/regeneron-publications-preview.png",
-          alt: "Regeneron Publications at ESMO 2026 preview"
+          // Clearly labelled ESMO placeholder preview; replace after approval.
+          src: "/downloads/regeneron-publications-esmo-2026-preview.png",
+          alt: "ESMO 2026 placeholder preview - coming soon"
         },
         download: {
-          label: "Download Regeneron Publications",
+          label: "Open ESMO 2026 placeholder PDF",
           href: pdfs.esmo
         }
       }
@@ -237,8 +237,9 @@ function HomeScreen({
                       }
                     : mod.theme === "publications"
                     ? {
+                        // Same blue color scheme as Company Brochure.
                         background:
-                          "linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%)"
+                          "linear-gradient(135deg, #65cbe8 0%, #0073b8 42%, #004a93 72%, #003b7a 100%)"
                       }
                     : {})
                 }}
@@ -294,6 +295,38 @@ function HomeScreen({
         </main>
       </div>
     </div>
+  );
+}
+
+function PdfDownload({ label, href }: { label: string; href: string }) {
+  const [available, setAvailable] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetch(href, { method: "HEAD" })
+      .then((response) => {
+        const contentType = response.headers.get("content-type") || "";
+        if (active) setAvailable(response.ok && contentType.toLowerCase().includes("pdf"));
+      })
+      .catch(() => { if (active) setAvailable(false); });
+    return () => { active = false; };
+  }, [href]);
+
+  if (available === null) {
+    return <div className="download-unavailable">Checking PDF availability…</div>;
+  }
+  if (!available) {
+    return (
+      <div className="download-unavailable" role="status">
+        Original PDF not included yet. Add the approved file to <code>public/downloads</code>.
+      </div>
+    );
+  }
+  return (
+    <a className="download-button" href={href} target="_blank" rel="noopener noreferrer"
+      onClick={() => trackEvent("pdf_download", { label, href })}>
+      ↓ {label}
+    </a>
   );
 }
 
@@ -368,22 +401,7 @@ function ScreenContent({ screen }: { screen: Screen }) {
         </div>
       )}
 
-      {screen.download && (
-        <a
-          className="download-button"
-          href={screen.download.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() =>
-            trackEvent("pdf_download", {
-              label: screen.download!.label,
-              href: screen.download!.href
-            })
-          }
-        >
-          ↓ {screen.download.label}
-        </a>
-      )}
+      {screen.download && <PdfDownload label={screen.download.label} href={screen.download.href} />}
     </>
   );
 }
@@ -507,8 +525,9 @@ function ModuleScreen({
                 }
               : module.theme === "publications"
               ? {
+                  // Same blue background as Company Brochure subpage.
                   background:
-                    "linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%)"
+                    "linear-gradient(135deg, #e8f7fb 0%, #42bfe6 24%, #005aa4 56%, #003b7a 100%)"
                 }
               : undefined
           }
