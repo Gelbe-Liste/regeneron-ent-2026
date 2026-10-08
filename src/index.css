@@ -144,7 +144,8 @@ button {
 }
 
 .module-card.veloci {
-  background: linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%);
+  /* Former ASCO 2026 blue gradient (swapped with VelociSuite purple). */
+  background: linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%);
 }
 
 .module-card.rgc {
@@ -237,7 +238,7 @@ button {
 .module-screen.veloci {
   background:
     radial-gradient(circle at 72% 8%, rgba(255, 255, 255, 0.18), transparent 25%),
-    linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%);
+    linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%);
 }
 
 .module-screen.rgc {

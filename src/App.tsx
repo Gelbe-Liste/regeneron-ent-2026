@@ -23,7 +23,7 @@ type Module = {
   eyebrow: string;
   title: string;
   subtitle: string;
-  theme: "veloci" | "rgc" | "company" | "publications";
+  theme: "veloci" | "rgc" | "company" | "asco" | "publications";
   screens: Screen[];
 };
 
@@ -31,7 +31,8 @@ const pdfs = {
   velocisuite: "/downloads/velocisuite-flyer-2026.pdf",
   rgc: "/downloads/rgc-factsheet-2025.pdf",
   company: "/downloads/Regeneron_Company-Update.pdf",
-  publications: "/downloads/regeneron-publications-asco-2026.pdf"
+  publications: "/downloads/regeneron-publications-asco-2026.pdf",
+  esmo: "/downloads/regeneron-publications-esmo-2026.pdf"
 };
 
 function trackEvent(eventName: string, data?: Record<string, string | number>) {
@@ -122,7 +123,7 @@ const modules: Module[] = [
     eyebrow: "Regeneron Publications",
     title: "ASCO 2026",
     subtitle: "Overview and collated Regeneron Publications from ASCO 2026",
-    theme: "publications",
+    theme: "asco",
     screens: [
       {
         label: "Download",
@@ -136,6 +137,31 @@ const modules: Module[] = [
         download: {
           label: "Download Regeneron Publications",
           href: pdfs.publications
+        }
+      }
+    ]
+  },
+  {
+    // ESMO has its own ID and PDF path to avoid opening the ASCO file.
+    id: "esmo-2026",
+    eyebrow: "Regeneron Publications",
+    title: "ESMO 2026",
+    subtitle: "Overview and collated Regeneron Publications from ESMO 2026",
+    theme: "publications",
+    screens: [
+      {
+        label: "Download",
+        title: "Original material",
+        body:
+          "Download the source PDF or return to the main menu to explore additional Regeneron materials",
+        preview: {
+          // Initially shared with ASCO as requested; replace with ESMO artwork later.
+          src: "/downloads/regeneron-publications-preview.png",
+          alt: "Regeneron Publications at ESMO 2026 preview"
+        },
+        download: {
+          label: "Download Regeneron Publications",
+          href: pdfs.esmo
         }
       }
     ]
@@ -203,6 +229,11 @@ function HomeScreen({
                         background:
                           "linear-gradient(135deg, #65cbe8 0%, #0073b8 42%, #004a93 72%, #003b7a 100%)",
                         color: "#ffffff"
+                      }
+                    : mod.theme === "asco"
+                    ? {
+                        background:
+                          "linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%)"
                       }
                     : mod.theme === "publications"
                     ? {
@@ -468,6 +499,11 @@ function ModuleScreen({
               ? {
                   background:
                     "linear-gradient(135deg, #e8f7fb 0%, #42bfe6 24%, #005aa4 56%, #003b7a 100%)"
+                }
+              : module.theme === "asco"
+              ? {
+                  background:
+                    "linear-gradient(135deg, #173b8f 0%, #7c2bea 52%, #d4008c 100%)"
                 }
               : module.theme === "publications"
               ? {
