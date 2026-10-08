@@ -181,7 +181,7 @@ function HomeScreen({
         <Header onContact={onContact} />
 
         <main className="home-screen">
-          <div className="badge">36th German Skin Cancer Congress</div>
+          <div className="badge">59th ENT Congress Mannheim</div>
 
           <h1>WHO WE ARE</h1>
 
